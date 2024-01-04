@@ -15,6 +15,7 @@ resources:
       name: ArtemiSec/artemisec-templates
       type: git
       endpoint: template-test
+      ref: refs/heads/main 
 
 variables:
   - template: templates/variables.yml@devops

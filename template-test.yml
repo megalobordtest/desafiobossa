@@ -14,7 +14,7 @@ resources:
     - repository: devops
       name: arquitetura-templates
       type: git
-      endpoint: template-connection
+      endpoint: template-test
 
 variables:
   - template: templates/variables.yml@devops

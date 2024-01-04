@@ -12,7 +12,7 @@ resources:
   repositories:
     - repository: self
     - repository: devops
-      name: ArtemiSec/arquitetura-templates
+      name: ArtemiSec/artemisec-templates
       type: git
       endpoint: template-test
 

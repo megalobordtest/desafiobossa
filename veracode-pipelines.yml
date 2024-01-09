@@ -15,7 +15,7 @@ steps:
     ConnectionDetailsSelection: 'Service Connection'
     veracodeAppProfile: '$(system.teamProject)'
     version: '$(build.buildNumber)'
-    filepath: '$(build.artifactstagingdirectory)'
+    filepath: '$(build.artifactstagingdirectory)/src'
     createProfile: true
     importResults: true
     maximumWaitTime: '360'

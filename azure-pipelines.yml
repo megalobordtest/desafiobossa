@@ -8,7 +8,7 @@ stages:
       vmImage: 'ubuntu-latest'
     steps:
     - checkout: self
-    - bash: docker run -e SEMGREP_APP_TOKEN=$SEMGREP_APP_TOKEN --rm -v "${PWD}:/$(system.teamProject)" returntocorp/semgrep semgrep ci
+    - bash: docker run -e SEMGREP_APP_TOKEN=$(SEMGREP_APP_TOKEN) --rm -v "${PWD}:/$(system.teamProject)" returntocorp/semgrep semgrep ci
     
     #- bash: docker build -t defect .
     #   displayName: 'Build Image'

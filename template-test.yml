@@ -22,8 +22,10 @@ variables:
   - template: templates/variables.yml@devops
 
 stages:
-  - template: templates/dast/owasp-docker.yml@devops
-    parameters:
-      containerPort: "3000"
+  # - template: templates/dast/owasp-docker.yml@devops
+  #   parameters:
+  #     containerPort: "3000"
 
-  - template: templates/sast/semgrep.yml@devops
+  # - template: templates/sast/semgrep.yml@devops
+  
+  - template: templates/sast/depscan.yml@devops

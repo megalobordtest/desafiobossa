@@ -1,0 +1,27 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- none
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: |
+    npm install && \
+    docker run --rm \
+    -e user=$USER \
+    -u $(id -u ${USER}):$(id -g ${USER}) \
+    --volume "$PWD:/src" \
+    --volume "$PWD:/usr/share/dependency-check/data" \
+    --volume "$PWD/odc-reports:/report" \
+    "owasp/dependency-check:latest" \
+    --scan "/src" \
+    --nvdApiKey "$(NVD_API_KEY)" \
+    --format "ALL" \
+    --project "$(Build.Repository.Name)" \
+    --out "/report"
+  

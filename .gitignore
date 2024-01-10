@@ -5,3 +5,8 @@
 /coverage
 /.npmrc
 /.env
+*.txt
+*odc**
+*oss**
+publishedSuppressions.xml 
+/cache

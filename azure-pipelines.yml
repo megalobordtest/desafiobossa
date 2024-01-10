@@ -8,8 +8,9 @@ stages:
       vmImage: 'ubuntu-latest'
     steps:
     - checkout: self
+    - bash: docker run -e SEMGREP_APP_TOKEN=$SEMGREP_APP_TOKEN --rm -v "${PWD}:/$(system.teamProject)" returntocorp/semgrep semgrep ci --error
     
-    # - bash: docker build -t defect .
+    #- bash: docker build -t defect .
     #   displayName: 'Build Image'
 
     # - bash: docker run -d -p 3000:3000 defect
@@ -30,82 +31,82 @@ stages:
     #   inputs:
     #     pollingTimeoutSec: '600'
 
-    - task: owaspzap@1
-      inputs:
-        aggressivemode: true
-        threshold: '600'
-        scantype: 'targetedScan'
-        url: 'https://sga.com.br/'
-        port: '80'
-      displayName: 'Owasp Scan'
+    # - task: owaspzap@1
+    #   inputs:
+    #     aggressivemode: true
+    #     threshold: '600'
+    #     scantype: 'targetedScan'
+    #     url: 'https://sga.com.br/'
+    #     port: '80'
+    #   displayName: 'Owasp Scan'
 
-    - bash: |
-        sudo npm install -g handlebars-cmd
-        sudo cat <<EOF > owaspzap/nunit-template.hbs
-        {{#each site}}
-        <test-run
-            id="2"
-            name="Owasp test"
-            start-time="{{../[@generated]}}"  >
-            <test-suite
-                id="{{@index}}"
-                type="Assembly"
-                name="{{[@name]}}"
-                result="Failed"
-                failed="{{alerts.length}}">
-                <attachments>
-                    <attachment>
-                        <filePath>owaspzap/report.html</filePath>
-                    </attachment>
-                </attachments>
-            {{#each alerts}}<test-case
-                id="{{@index}}"
-                name="{{alert}}"
-                result="Failed"
-                fullname="{{alert}}"
-                time="1">
-                    <failure>
-                            <message>
-                             <![CDATA[{{{desc}}}]]>
-                        </message>
-                        <stack-trace>
-                            <![CDATA[
-        Solution:
-        {{{solution}}}
-        Reference:
-        {{{reference}}}
-        instances:{{#each instances}}
-        * {{uri}}
-            - {{method}}
-            {{#if evidence}}- {{{evidence}}}{{/if}}
-                             {{/each}}]]>
-                         </stack-trace>
-                    </failure>
-            </test-case>
-            {{/each}}
-            </test-suite>
-        </test-run>
-        {{/each}}
-        EOF
-      displayName: 'Owasp Nunit Template'
-    - bash: 'handlebars owaspzap/report.json < owaspzap/nunit-template.hbs > owaspzap/test-results.xml'
-      displayName: 'Generate Nunit type file'
+    # - bash: |
+    #     sudo npm install -g handlebars-cmd
+    #     sudo cat <<EOF > owaspzap/nunit-template.hbs
+    #     {{#each site}}
+    #     <test-run
+    #         id="2"
+    #         name="Owasp test"
+    #         start-time="{{../[@generated]}}"  >
+    #         <test-suite
+    #             id="{{@index}}"
+    #             type="Assembly"
+    #             name="{{[@name]}}"
+    #             result="Failed"
+    #             failed="{{alerts.length}}">
+    #             <attachments>
+    #                 <attachment>
+    #                     <filePath>owaspzap/report.html</filePath>
+    #                 </attachment>
+    #             </attachments>
+    #         {{#each alerts}}<test-case
+    #             id="{{@index}}"
+    #             name="{{alert}}"
+    #             result="Failed"
+    #             fullname="{{alert}}"
+    #             time="1">
+    #                 <failure>
+    #                         <message>
+    #                          <![CDATA[{{{desc}}}]]>
+    #                     </message>
+    #                     <stack-trace>
+    #                         <![CDATA[
+    #     Solution:
+    #     {{{solution}}}
+    #     Reference:
+    #     {{{reference}}}
+    #     instances:{{#each instances}}
+    #     * {{uri}}
+    #         - {{method}}
+    #         {{#if evidence}}- {{{evidence}}}{{/if}}
+    #                          {{/each}}]]>
+    #                      </stack-trace>
+    #                 </failure>
+    #         </test-case>
+    #         {{/each}}
+    #         </test-suite>
+    #     </test-run>
+    #     {{/each}}
+    #     EOF
+    #   displayName: 'Owasp Nunit Template'
+    # - bash: 'handlebars owaspzap/report.json < owaspzap/nunit-template.hbs > owaspzap/test-results.xml'
+    #   displayName: 'Generate Nunit type file'
 
 
-    - task: PublishTestResults@2
-      displayName: 'Publish Test Results'
-      inputs:
-        testResultsFormat: 'NUnit'
-        testResultsFiles: 'owaspzap/test-results.xml' 
+    # - task: PublishTestResults@2
+    #   displayName: 'Publish Test Results'
+    #   inputs:
+    #     testResultsFormat: 'NUnit'
+    #     testResultsFiles: 'owaspzap/test-results.xml' 
         
-    - bash: cp owaspzap/test-results.xml $(Build.ArtifactStagingDirectory)/test-results.xml
+    # - bash: cp owaspzap/test-results.xml $(Build.ArtifactStagingDirectory)/test-results.xml
     # - bash: cp owaspzap/report.json $(Build.ArtifactStagingDirectory)/report.json
 
-    - task: PublishBuildArtifacts@1
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)/test-results.xml'
-        ArtifactName: 'project'
-        publishLocation: 'Container' 
+    # - task: PublishBuildArtifacts@1
+    #   inputs:
+    #     PathtoPublish: '$(Build.ArtifactStagingDirectory)/test-results.xml'
+    #     ArtifactName: 'project'
+    #     publishLocation: 'Container' 
 
     # - task: PublishBuildArtifacts@1
     #   inputs:

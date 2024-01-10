@@ -3,7 +3,8 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-trigger: none
+trigger: 
+- none
 
 pool:
   vmImage: ubuntu-latest
@@ -24,3 +25,5 @@ stages:
   - template: templates/dast/owasp-docker.yml@devops
     parameters:
       containerPort: "3000"
+
+  - template: templates/sast/semgrep.yml@devops

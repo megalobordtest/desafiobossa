@@ -28,5 +28,5 @@ stages:
 
   # - template: templates/sast/semgrep.yml@devops
   
-  # - template: templates/sast/depscan.yml@devops
+  - template: templates/sast/depscan.yml@devops
   - template: templates/sast/dependencycheck.yml@devops

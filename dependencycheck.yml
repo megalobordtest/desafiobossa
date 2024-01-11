@@ -40,9 +40,9 @@ steps:
         echo "Initially creating persistent directory: $CACHE_DIRECTORY"
         mkdir -p "$CACHE_DIRECTORY"
     fi
-    if [ ! -d "$DATA_DIRECTORY" ]; then
+    if [ ! -d "$ODC_REPORTS" ]; then
         echo "Initially creating persistent directory: $DATA_DIRECTORY"
-        mkdir -p "$DATA_DIRECTORY"
+        mkdir -p "$ODC_REPORTS"
     fi
 
     docker run --rm \

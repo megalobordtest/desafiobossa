@@ -31,7 +31,7 @@ steps:
     serviceConnectionEndpoint: 'snyk-conn'
     testType: 'container'
     dockerImageName: 'snyk'
-    dockerfilePath: '$(Build.Repository.Name)/Dockerfile'
+    dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
     monitorWhen: 'always'
     failOnIssues: false
     projectName: '$(Build.Repository.Name)-snyk'

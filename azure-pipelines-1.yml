@@ -4,10 +4,24 @@
 # https://aka.ms/yaml
 
 trigger:
-- master
+- none
 
 pool:
   vmImage: ubuntu-latest
 
 steps:
-
+- task: SnykSecurityScan@1
+  inputs:
+    serviceConnectionEndpoint: 'snyk-conn'
+    testType: 'app'
+    monitorWhen: 'always'
+    failOnIssues: false
+    projectName: '$(Build.Repository.Name)-snyk'
+    organization: '70513e27-0428-4701-8e24-11cf8186e55d'
+- task: SnykSecurityScan@1
+  inputs:
+    serviceConnectionEndpoint: 'snyk-conn'
+    testType: 'code'
+    failOnIssues: false
+    projectName: '$(Build.Repository.Name)-snyk'
+    organization: '70513e27-0428-4701-8e24-11cf8186e55d'

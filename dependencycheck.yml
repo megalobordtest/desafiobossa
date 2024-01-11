@@ -30,6 +30,7 @@ steps:
     DC_PROJECT="dependency-check scan: $(pwd)"
     DATA_DIRECTORY="$DC_DIRECTORY/data"
     CACHE_DIRECTORY="$DC_DIRECTORY/data/cache"
+    ODC_REPORTS="$DC_DIRECTORY/odc-reports"
 
     if [ ! -d "$DATA_DIRECTORY" ]; then
         echo "Initially creating persistent directory: $DATA_DIRECTORY"
@@ -39,13 +40,17 @@ steps:
         echo "Initially creating persistent directory: $CACHE_DIRECTORY"
         mkdir -p "$CACHE_DIRECTORY"
     fi
+    if [ ! -d "$DATA_DIRECTORY" ]; then
+        echo "Initially creating persistent directory: $DATA_DIRECTORY"
+        mkdir -p "$DATA_DIRECTORY"
+    fi
 
     docker run --rm \
         -e user=$USER \
         -u $(id -u ${USER}):$(id -g ${USER}) \
         --volume $(pwd):/src:z \
         --volume "$DATA_DIRECTORY":/usr/share/dependency-check/data:z \
-        --volume $(pwd)/odc-reports:/report:z \
+        --volume "$ODC_REPORTS":/report:z \
         owasp/dependency-check:$DC_VERSION \
         --scan /src \
         --nvdApiKey "$(NVD_API_KEY)" \

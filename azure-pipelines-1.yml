@@ -25,3 +25,12 @@ steps:
     failOnIssues: false
     projectName: '$(Build.Repository.Name)-snyk'
     organization: '70513e27-0428-4701-8e24-11cf8186e55d'
+- task: SnykSecurityScan@1
+  inputs:
+    serviceConnectionEndpoint: 'snyk-conn'
+    testType: 'container'
+    dockerfilePath: '$(Build.Repository.Name)'
+    monitorWhen: 'always'
+    failOnIssues: false
+    projectName: '$(Build.Repository.Name)-snyk'
+    organization: '70513e27-0428-4701-8e24-11cf8186e55d'

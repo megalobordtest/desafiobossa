@@ -12,7 +12,7 @@ pool:
 steps:
 - script: |
     npm install && \
-    docker run --rm \
+    sudo docker run --rm \
     -e user=$USER \
     -u $(id -u ${USER}):$(id -g ${USER}) \
     --volume "$PWD:/src" \

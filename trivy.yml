@@ -10,8 +10,9 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+- script: npm install
 - task: trivy@1
   inputs:
     version: 'latest'
     path: '.'
-    exitCode: '0'
+    exitCode: '1'

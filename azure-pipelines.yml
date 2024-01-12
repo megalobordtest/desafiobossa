@@ -33,12 +33,13 @@ stages:
     - task: SonarCloudPublish@1
       inputs:
         pollingTimeoutSec: '600'
-    - task: PublishPipelineArtifact@1
-      inputs:
-          targetPath: '$(Agent.TempDirectory)/sonar/$(Build.BuildNumber)/**/report.json'
-          artifact: 'sonar-json'
-          publishLocation: 'pipeline'
+    
     - script: ls -lha $(Agent.TempDirectory)/sonar/$(Build.BuildNumber)
+    # - task: PublishPipelineArtifact@1
+    #   inputs:
+    #       targetPath: '$(Agent.TempDirectory)/sonar/$(Build.BuildNumber)/**/report.json'
+    #       artifact: 'sonar-json'
+    #       publishLocation: 'pipeline'
       
     # - task: owaspzap@1
     #   inputs:

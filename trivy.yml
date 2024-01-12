@@ -18,22 +18,19 @@ steps:
     path: '.'
     exitCode: '0'
 - script: ls -lha /tmp/
-# - task: PublishPipelineArtifact@1
-#   inputs:
-#       targetPath: '/tmp/trivy-*.json'
-#       artifact: 'trivy-files'
-#       publishLocation: 'pipeline'
 - script: |
     # Encontrar o arquivo JSON correspondente e renomeá-lo para um nome fixo
     found_file=$(find /tmp -name 'trivy-results-*.json' -print -quit)
     if [ -n "$found_file" ]; then
+      echo "Arquivo correspondente encontrado."
       mv "$found_file" /tmp/trivy-results.json
     else
       echo "Nenhum arquivo correspondente encontrado."
       exit 1
     fi
-
-    # Publicar o arquivo renomeado como artefato
-    echo "Publishing artifact..."
-    echo "##vso[artifact.publish containerfolder=/tmp;artifactname=trivy-files;]trivy-results.json"
-  displayName: 'Encontrar e publicar arquivo JSON'
+  displayName: 'Encontrar arquivo JSON'
+- task: PublishPipelineArtifact@1
+  inputs:
+      targetPath: '/tmp/trivy-*.json'
+      artifact: 'trivy-files'
+      publishLocation: 'pipeline'

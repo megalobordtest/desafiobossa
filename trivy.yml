@@ -20,6 +20,6 @@ steps:
 - script: ls -lha /tmp/
 - task: PublishPipelineArtifact@1
   inputs:
-      targetPath: '/tmp/trivy-**'
+      targetPath: '/tmp/trivy-**/*.json'
       artifact: 'trivy-files'
       publishLocation: 'pipeline'

@@ -13,5 +13,5 @@ steps:
 - task: trivy@1
   inputs:
     version: 'latest'
-    path: '$(Build.SourcesDirectory)'
+    path: '.'
     exitCode: '0'

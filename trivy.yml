@@ -23,7 +23,7 @@ steps:
     found_file=$(find /tmp -name 'trivy-results-*.json' -print -quit)
     if [ -n "$found_file" ]; then
       echo "Arquivo correspondente encontrado."
-      mv "$found_file" /tmp/trivy-results.json
+      cp "$found_file" /tmp/trivy-results.json
     else
       echo "Nenhum arquivo correspondente encontrado."
       exit 1
@@ -31,6 +31,6 @@ steps:
   displayName: 'Encontrar arquivo JSON'
 - task: PublishPipelineArtifact@1
   inputs:
-      targetPath: '/tmp/trivy-*.json'
+      targetPath: '/tmp/trivy-results.json'
       artifact: 'trivy-files'
       publishLocation: 'pipeline'

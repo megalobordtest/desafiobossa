@@ -17,7 +17,10 @@ steps:
     version: 'latest'
     path: '.'
     exitCode: '0'
-
+- script: ls -lha
+- script: ls -lha $(Build.ArtifactStagingDirectory)
+- script: ls -lha $(Build.SourcesDirectory)
+- script: ls -lha /tmp/
 - task: PublishPipelineArtifact@1
   inputs:
       targetPath: '**/*/trivy-results-**.json'

@@ -20,6 +20,6 @@ steps:
 
 - task: PublishPipelineArtifact@1
   inputs:
-      targetPath: '/tmp/trivy-results-**.json'
+      targetPath: '**/*/trivy-results-**.json'
       artifact: 'trivy-files'
       publishLocation: 'pipeline'

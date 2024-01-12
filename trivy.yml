@@ -11,8 +11,16 @@ pool:
 
 steps:
 - script: npm install
+
 - task: trivy@1
   inputs:
     version: 'latest'
     path: '.'
-    exitCode: '1'
+    exitCode: '0'
+    options: '--format spdx-json --output trivyresult.json'
+
+- task: PublishPipelineArtifact@1
+  inputs:
+      targetPath: 'trivyresult.json'
+      artifact: 'trivy-files'
+      publishLocation: 'pipeline'

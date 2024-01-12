@@ -17,10 +17,9 @@ steps:
     version: 'latest'
     path: '.'
     exitCode: '0'
-    options: '--format spdx-json --output trivyresult.json'
 
 - task: PublishPipelineArtifact@1
   inputs:
-      targetPath: 'trivyresult.json'
+      targetPath: '/tmp/trivy-results-**.json'
       artifact: 'trivy-files'
       publishLocation: 'pipeline'

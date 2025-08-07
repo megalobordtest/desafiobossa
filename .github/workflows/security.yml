@@ -67,6 +67,7 @@ jobs:
         uses: github/codeql-action/analyze@v3
         with:
           category: "/language:${{matrix.language}}"    
+          output: sarif-results
 
       - name: Upload SARIF
         uses: github/codeql-action/upload-sarif@v3
@@ -76,7 +77,7 @@ jobs:
 
       - name: Gate por severidade (SARIF)
         run: |
-          F="${{ steps.msdo.outputs.sarifFile }}"
+          F="sarif-results/*.sarif"
           e=$(jq '[.runs[].results[] | select(.level=="error")]   | length' "$F")
           w=$(jq '[.runs[].results[] | select(.level=="warning")] | length' "$F")
           echo "errors=$e warnings=$w"

@@ -25,7 +25,7 @@ jobs:
         id: msdo
         uses: microsoft/security-devops-action@v1
         env:          
-          GDN_RUN_MINSEVERITY: High
+          GDN_RUN_MINSEVERITY: Low
       
       # - name: Upload SARIF
       #   uses: github/codeql-action/upload-sarif@v3

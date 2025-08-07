@@ -33,3 +33,15 @@ jobs:
         with:
           sarif_file: ${{ steps.msdo.outputs.sarifFile }}
           category: msdo
+
+      - name: Gate por severidade (SARIF)
+        run: |
+          F="${{ steps.msdo.outputs.sarifFile }}"
+          e=$(jq '[.runs[].results[] | select(.level=="error")]   | length' "$F")
+          w=$(jq '[.runs[].results[] | select(.level=="warning")] | length' "$F")
+          echo "errors=$e warnings=$w"
+          # Quebrar com Medium+:
+          if [ "$e" -gt 0 ] || [ "$w" -gt 0 ]; then
+            echo "Falhando por severidade (Warning+)."
+            exit 1
+          fi    

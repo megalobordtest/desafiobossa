@@ -75,6 +75,10 @@ jobs:
           sarif_file: ${{ steps.msdo.outputs.sarifFile }}
           category: msdo
 
+      - name: teste cat
+        run: |
+          cat "sarif-results/*.sarif"             
+
       - name: Gate por severidade (SARIF)
         run: |
           F="sarif-results/*.sarif"

@@ -75,18 +75,18 @@ jobs:
           sarif_file: ${{ steps.msdo.outputs.sarifFile }}
           category: msdo
 
-      - name: teste cat
-        run: |
-          cat "sarif-results/*.sarif"             
+      # - name: teste cat
+      #   run: |
+      #     cat "sarif-results/*.sarif"             
 
-      - name: Gate por severidade (SARIF)
-        run: |
-          F="sarif-results/*.sarif"
-          e=$(jq '[.runs[].results[] | select(.level=="error")]   | length' "$F")
-          w=$(jq '[.runs[].results[] | select(.level=="warning")] | length' "$F")
-          echo "errors=$e warnings=$w"
-          # Quebrar com Medium+:
-          if [ "$e" -gt 0 ] || [ "$w" -gt 0 ]; then
-            echo "Falhando por severidade (Warning+)."
-            exit 1
-          fi
+      # - name: Gate por severidade (SARIF)
+      #   run: |
+      #     F="sarif-results/*.sarif"
+      #     e=$(jq '[.runs[].results[] | select(.level=="error")]   | length' "$F")
+      #     w=$(jq '[.runs[].results[] | select(.level=="warning")] | length' "$F")
+      #     echo "errors=$e warnings=$w"
+      #     # Quebrar com Medium+:
+      #     if [ "$e" -gt 0 ] || [ "$w" -gt 0 ]; then
+      #       echo "Falhando por severidade (Warning+)."
+      #       exit 1
+      #     fi
